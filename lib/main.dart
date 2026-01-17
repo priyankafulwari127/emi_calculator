@@ -1,7 +1,11 @@
-import 'package:emi_calculator/bloc/emi_bloc.dart';
+import 'package:emi_calculator/bloc_state_management/bloc/interest_bloc.dart';
+import 'package:emi_calculator/bloc_state_management/bloc/loan_amount_bloc.dart';
+import 'package:emi_calculator/bloc_state_management/bloc/period_bloc.dart';
 import 'package:emi_calculator/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'bloc_state_management/bloc/emi_bloc.dart';
 
 // Using Bloc state management in this project
 // Bloc state management flow
@@ -18,10 +22,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) {
-        return EmiBloc();
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => EmiBloc()),
+        BlocProvider(create: (_) => LoanAmountBloc()),
+        BlocProvider(create: (_) => InterestBloc()),
+        BlocProvider(create: (_) => PeriodBloc()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
