@@ -190,27 +190,6 @@ class HomeScreen extends StatelessWidget {
                         yearsDurationController.text,
                       ),
                     );
-                isDetailsButtonVisible = true;
-                if (isDetailsButtonVisible == true) {
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => DetailedCalculation(
-                            tab: index,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Detailed EMI',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }
               },
               child: const Text(
                 'Calculate',
@@ -354,27 +333,6 @@ class HomeScreen extends StatelessWidget {
                         yearsDurationController.text,
                       ),
                     );
-                isDetailsButtonVisible = true;
-                if (isDetailsButtonVisible == true) {
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => DetailedCalculation(
-                            tab: index,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Detailed Loan Amount',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }
               },
               child: const Text(
                 'Calculate',
@@ -518,27 +476,6 @@ class HomeScreen extends StatelessWidget {
                         emiController.text,
                       ),
                     );
-                isDetailsButtonVisible = true;
-                if (isDetailsButtonVisible == true) {
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => DetailedCalculation(
-                            tab: index,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Detailed Interest',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }
               },
               child: const Text(
                 'Calculate',
@@ -665,27 +602,6 @@ class HomeScreen extends StatelessWidget {
                         emiController.text,
                       ),
                     );
-                isDetailsButtonVisible = true;
-                if (isDetailsButtonVisible == true) {
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => DetailedCalculation(
-                            tab: index,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Detailed Period',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }
               },
               child: const Text(
                 'Calculate',
