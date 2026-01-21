@@ -13,8 +13,33 @@ class EmiBloc extends Bloc<EmiEvent, EmiState> {
         event.tenureInMonths,
         event.tenureInYears,
       );
-
-      emit(CalculatedEmi(emi));
+      final totalAmountPaid = _calculateTotalAmountPaid(
+        event.loanAmount,
+        emi,
+        event.interest,
+        event.tenureInYears,
+        event.tenureInMonths,
+      );
+      final totalInterest = _calculateTotalInterest(
+        event.loanAmount,
+        totalAmountPaid,
+        event.interest,
+        event.tenureInYears,
+        event.tenureInMonths,
+      );
+      final principleAmount = _calculatePrincipleAmount(
+        event.loanAmount,
+        event.interest,
+        event.tenureInMonths,
+        event.tenureInYears,
+        emi,
+      );
+      emit(CalculatedEmi(
+        emi,
+        principleAmount,
+        totalInterest,
+        totalAmountPaid,
+      ));
     });
   }
 
@@ -42,5 +67,42 @@ class EmiBloc extends Bloc<EmiEvent, EmiState> {
     //EMI value per month
     var emi = loanAmountInDouble * monthlyInterestFromAnnualInterest * interestWithTenure / divider;
     return emi;
+  }
+
+  double _calculateTotalAmountPaid(String loanAmount, double emi, String interest, String tenureInYears, String tenureInMonths) {
+    double monthlyTenureInDouble = double.tryParse(tenureInMonths) ?? 0.0;
+    double yearlyTenureInDouble = double.tryParse(tenureInYears) ?? 0.0;
+
+    //converting tenure to months
+    var monthlyTenure = (yearlyTenureInDouble * 12) + monthlyTenureInDouble;
+
+    var totalAmountPaid = emi * monthlyTenure;
+    return totalAmountPaid;
+  }
+
+  double _calculateTotalInterest(String loanAmount, double totalPaid, String interest, String tenureInYears, String tenureInMonths) {
+    double loanAmountInDouble = double.tryParse(loanAmount) ?? 0.0;
+
+    var totalInterest = totalPaid - loanAmountInDouble;
+    return totalInterest;
+  }
+
+  double _calculatePrincipleAmount(String loanAmount, String interest, String tenureInMonths, String tenureInYears, double emi) {
+    double interestInDouble = double.tryParse(interest) ?? 0.0;
+    double monthDurationInDouble = double.tryParse(tenureInMonths) ?? 0.0;
+    double yearlyDurationInDouble = double.tryParse(tenureInYears) ?? 0.0;
+
+    //converting duration from years to months
+    var durationInMonths = (yearlyDurationInDouble * 12) + monthDurationInDouble;
+    // R = (rate of interest annually/12/100)
+    var monthlyInterest = (interestInDouble / 12) / 100;
+
+    //(1 + monthlyInterest)^durationInMonths
+    var interestWithTenure = pow(1 + monthlyInterest, durationInMonths);
+
+    var upper = emi * (interestWithTenure - 1);
+    var denominator = monthlyInterest * interestWithTenure;
+    var principleAmount = upper / denominator;
+    return principleAmount;
   }
 }
