@@ -1,8 +1,20 @@
-abstract class LoanAmountState{}
+import '../../model/amortization_table_model.dart';
 
-class LoanAmountInitial extends LoanAmountState{}
+abstract class LoanAmountState {}
 
-class CalculatedLoanAmount extends LoanAmountState{
+class LoanAmountInitial extends LoanAmountState {}
+
+class CalculatedLoanAmount extends LoanAmountState {
   final double amount;
-  CalculatedLoanAmount(this.amount);
+  final double totalInterest;
+  final double totalAmountPaid;
+
+  final List<AmortizationTableModel> amortizationTable;
+
+  CalculatedLoanAmount({
+    required this.amount,
+    required this.totalInterest,
+    required this.totalAmountPaid,
+    required this.amortizationTable,
+  });
 }

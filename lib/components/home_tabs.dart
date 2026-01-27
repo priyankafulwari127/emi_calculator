@@ -6,6 +6,7 @@ import '../bloc_state_management/bloc/emi_bloc.dart';
 import '../bloc_state_management/bloc/interest_bloc.dart';
 import '../bloc_state_management/bloc/loan_amount_bloc.dart';
 import '../bloc_state_management/bloc/period_bloc.dart';
+import '../bloc_state_management/calculation_list_cubit/list_visibility_cubit.dart';
 import '../bloc_state_management/event/emi_event.dart';
 import '../bloc_state_management/event/interest_event.dart';
 import '../bloc_state_management/event/loan_amount_event.dart';
@@ -72,11 +73,22 @@ class HomeTabs {
                     content: Text('Please fill all the fields'),
                   );
                 } else {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.pushReplacement(
+                    context,
                     MaterialPageRoute(
-                      builder: (context) => DetailedCalculation(tab: index),
+                      builder: (_) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(value: context.read<EmiBloc>()),
+                          BlocProvider.value(value: context.read<LoanAmountBloc>()),
+                          BlocProvider.value(value: context.read<InterestBloc>()),
+                          BlocProvider.value(value: context.read<PeriodBloc>()),
+                          BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                        ],
+                        child: DetailedCalculation(tab: index),
+                      ),
                     ),
                   );
+
                 }
               },
               child: const Text(
@@ -144,13 +156,22 @@ class HomeTabs {
                         yearsDurationController.text,
                       ),
                     );
-                Navigator.of(context).pushReplacement(
+                Navigator.pushReplacement(
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => DetailedCalculation(
-                      tab: index,
+                    builder: (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(value: context.read<EmiBloc>()),
+                        BlocProvider.value(value: context.read<LoanAmountBloc>()),
+                        BlocProvider.value(value: context.read<InterestBloc>()),
+                        BlocProvider.value(value: context.read<PeriodBloc>()),
+                        BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                      ],
+                      child: DetailedCalculation(tab: index),
                     ),
                   ),
                 );
+
               },
               child: const Text(
                 'Calculate',
@@ -217,13 +238,22 @@ class HomeTabs {
                         emiController.text,
                       ),
                     );
-                Navigator.of(context).pushReplacement(
+                Navigator.pushReplacement(
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => DetailedCalculation(
-                      tab: index,
+                    builder: (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(value: context.read<EmiBloc>()),
+                        BlocProvider.value(value: context.read<LoanAmountBloc>()),
+                        BlocProvider.value(value: context.read<InterestBloc>()),
+                        BlocProvider.value(value: context.read<PeriodBloc>()),
+                        BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                      ],
+                      child: DetailedCalculation(tab: index),
                     ),
                   ),
                 );
+
               },
               child: const Text(
                 'Calculate',
@@ -285,11 +315,22 @@ class HomeTabs {
                         emiController.text,
                       ),
                     );
-                Navigator.of(context).pushReplacement(
+                Navigator.pushReplacement(
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => DetailedCalculation(tab: index),
+                    builder: (_) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(value: context.read<EmiBloc>()),
+                        BlocProvider.value(value: context.read<LoanAmountBloc>()),
+                        BlocProvider.value(value: context.read<InterestBloc>()),
+                        BlocProvider.value(value: context.read<PeriodBloc>()),
+                        BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                      ],
+                      child: DetailedCalculation(tab: index),
+                    ),
                   ),
                 );
+
               },
               child: const Text(
                 'Calculate',

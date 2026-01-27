@@ -1,8 +1,22 @@
-abstract class InterestState{}
+import '../../model/amortization_table_model.dart';
 
-class InterestInitial extends InterestState{}
+abstract class InterestState {}
 
-class CalculatedInterest extends InterestState{
+class InterestInitial extends InterestState {}
+
+class CalculatedInterest extends InterestState {
   final double inter;
-  CalculatedInterest(this.inter);
+  final double principleAmount;
+  final double totalInterest;
+  final double totalAmountPaid;
+
+  final List<AmortizationTableModel> amortizationTable;
+
+  CalculatedInterest({
+    required this.inter,
+    required this.principleAmount,
+    required this.totalInterest,
+    required this.totalAmountPaid,
+    required this.amortizationTable,
+  });
 }

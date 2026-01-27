@@ -1,12 +1,16 @@
 import 'package:emi_calculator/bloc_state_management/bloc/interest_bloc.dart';
 import 'package:emi_calculator/bloc_state_management/bloc/loan_amount_bloc.dart';
 import 'package:emi_calculator/bloc_state_management/bloc/period_bloc.dart';
+import 'package:emi_calculator/bloc_state_management/calculation_list_cubit/list_visibility_cubit.dart';
 import 'package:emi_calculator/bloc_state_management/state/interest_state.dart';
 import 'package:emi_calculator/bloc_state_management/state/loan_amount_state.dart';
 import 'package:emi_calculator/bloc_state_management/state/period_state.dart';
+import 'package:emi_calculator/components/amortization_table_header.dart';
+import 'package:emi_calculator/components/amortization_table_list.dart';
 import 'package:emi_calculator/components/calculation_details_row.dart';
 import 'package:emi_calculator/components/calculation_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc_state_management/bloc/emi_bloc.dart';
 import '../bloc_state_management/state/emi_state.dart';
@@ -18,6 +22,8 @@ class DetailedCalculation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listVisibility = context.read<ListVisibilityCubit>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -39,7 +45,80 @@ class DetailedCalculation extends StatelessWidget {
         backgroundColor: Colors.purple[400],
         centerTitle: true,
       ),
-      body: calculationSwitch(),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            calculationSwitch(),
+            const SizedBox(
+              height: 15,
+            ),
+            GestureDetector(
+              onTap: () {
+                listVisibility.toggleVisibility();
+              },
+              child: BlocBuilder<ListVisibilityCubit, bool>(
+                builder: (context, isVisible) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        isVisible ? 'Hide Details' : 'View Details',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(
+                        isVisible ? Icons.arrow_drop_down_rounded : Icons.arrow_drop_up_rounded,
+                        size: 22,
+                        color: Colors.black,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              child: BlocBuilder<ListVisibilityCubit, bool>(
+                builder: (emit, isVisible) {
+                  return Visibility(
+                    visible: isVisible,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                amortizationTableHeaderComponent('Months'),
+                                amortizationTableHeaderComponent('Principle Paid'),
+                                amortizationTableHeaderComponent('EMI'),
+                                amortizationTableHeaderComponent('Interest'),
+                                amortizationTableHeaderComponent('Balance'),
+                              ],
+                            ),
+                            const Divider(
+                              indent: 5,
+                              endIndent: 5,
+                            ),
+                            //amortization table values
+                            AmortizationTableList(tab: tab)
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -47,7 +126,6 @@ class DetailedCalculation extends StatelessWidget {
     switch (tab) {
       case 0:
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               CalculationHeader<EmiBloc, EmiState>(
@@ -111,7 +189,6 @@ class DetailedCalculation extends StatelessWidget {
         );
       case 1:
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               CalculationHeader<LoanAmountBloc, LoanAmountState>(
@@ -131,11 +208,11 @@ class DetailedCalculation extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<LoanAmountBloc, LoanAmountState>(
                         label: 'Principle Amount',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
-                            return 'Rs. ${state.principleAmount.round()}';
+                          if (state is CalculatedLoanAmount) {
+                            return 'Rs. ${state.amount.round()}';
                           }
                           return 'Rs. 0.0';
                         },
@@ -144,10 +221,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<LoanAmountBloc, LoanAmountState>(
                         label: 'Total Interest',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedLoanAmount) {
                             return 'Rs. ${state.totalInterest.round()}';
                           }
                           return 'Rs. 0.0';
@@ -157,10 +234,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<LoanAmountBloc, LoanAmountState>(
                         label: 'Total Amount Paid',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedLoanAmount) {
                             return 'Rs. ${state.totalAmountPaid.round()}';
                           }
                           return 'Rs. 0.0';
@@ -175,7 +252,6 @@ class DetailedCalculation extends StatelessWidget {
         );
       case 2:
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               CalculationHeader<InterestBloc, InterestState>(
@@ -195,10 +271,10 @@ class DetailedCalculation extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<InterestBloc, InterestState>(
                         label: 'Principle Amount',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedInterest) {
                             return 'Rs. ${state.principleAmount.round()}';
                           }
                           return 'Rs. 0.0';
@@ -208,10 +284,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<InterestBloc, InterestState>(
                         label: 'Total Interest',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedInterest) {
                             return 'Rs. ${state.totalInterest.round()}';
                           }
                           return 'Rs. 0.0';
@@ -221,10 +297,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<InterestBloc, InterestState>(
                         label: 'Total Amount Paid',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedInterest) {
                             return 'Rs. ${state.totalAmountPaid.round()}';
                           }
                           return 'Rs. 0.0';
@@ -239,7 +315,6 @@ class DetailedCalculation extends StatelessWidget {
         );
       case 3:
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               CalculationHeader<PeriodBloc, PeriodState>(
@@ -259,10 +334,10 @@ class DetailedCalculation extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<PeriodBloc, PeriodState>(
                         label: 'Principle Amount',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedPeriod) {
                             return 'Rs. ${state.principleAmount.round()}';
                           }
                           return 'Rs. 0.0';
@@ -272,10 +347,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<PeriodBloc, PeriodState>(
                         label: 'Total Interest',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedPeriod) {
                             return 'Rs. ${state.totalInterest.round()}';
                           }
                           return 'Rs. 0.0';
@@ -285,10 +360,10 @@ class DetailedCalculation extends StatelessWidget {
                         indent: 2,
                         endIndent: 2,
                       ),
-                      CalculationDetailsRow<EmiBloc, EmiState>(
+                      CalculationDetailsRow<PeriodBloc, PeriodState>(
                         label: 'Total Amount Paid',
                         valueProvider: (state) {
-                          if (state is CalculatedEmi) {
+                          if (state is CalculatedPeriod) {
                             return 'Rs. ${state.totalAmountPaid.round()}';
                           }
                           return 'Rs. 0.0';
