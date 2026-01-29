@@ -73,7 +73,7 @@ class HomeTabs {
                     content: Text('Please fill all the fields'),
                   );
                 } else {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => MultiBlocProvider(
@@ -156,7 +156,7 @@ class HomeTabs {
                         yearsDurationController.text,
                       ),
                     );
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => MultiBlocProvider(
@@ -238,7 +238,7 @@ class HomeTabs {
                         emiController.text,
                       ),
                     );
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => MultiBlocProvider(
@@ -315,7 +315,7 @@ class HomeTabs {
                         emiController.text,
                       ),
                     );
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => MultiBlocProvider(
