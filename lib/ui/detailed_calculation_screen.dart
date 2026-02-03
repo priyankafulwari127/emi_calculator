@@ -1,7 +1,6 @@
 import 'package:emi_calculator/bloc_state_management/bloc/interest_bloc.dart';
 import 'package:emi_calculator/bloc_state_management/bloc/loan_amount_bloc.dart';
 import 'package:emi_calculator/bloc_state_management/bloc/period_bloc.dart';
-import 'package:emi_calculator/bloc_state_management/calculation_list_cubit/list_visibility_cubit.dart';
 import 'package:emi_calculator/bloc_state_management/state/interest_state.dart';
 import 'package:emi_calculator/bloc_state_management/state/loan_amount_state.dart';
 import 'package:emi_calculator/bloc_state_management/state/period_state.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc_state_management/bloc/emi_bloc.dart';
+import '../bloc_state_management/cubit/list_visibility_cubit.dart';
 import '../bloc_state_management/state/emi_state.dart';
 
 class DetailedCalculation extends StatelessWidget {
@@ -195,7 +195,7 @@ class DetailedCalculation extends StatelessWidget {
                 title: 'Loan Amount',
                 valueProvider: (state) {
                   if (state is CalculatedLoanAmount) {
-                    return 'Rs. ${state.amount.round()}';
+                    return 'Rs. ${state.amount.toStringAsFixed(2)}';
                   }
                   return 'Rs. 0.0';
                 },
