@@ -57,7 +57,7 @@ class HomeTabs {
             height: 10,
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               prePaymentVisibility.toggleVisibility();
             },
             child: BlocBuilder<PrePaymentVisibility, bool>(
@@ -163,6 +163,7 @@ class HomeTabs {
                           BlocProvider.value(value: context.read<InterestBloc>()),
                           BlocProvider.value(value: context.read<PeriodBloc>()),
                           BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                          BlocProvider.value(value: context.read<PrePaymentVisibility>()),
                         ],
                         child: DetailedCalculation(tab: index),
                       ),
@@ -185,8 +186,6 @@ class HomeTabs {
   }
 
   Widget loanAmountTab(BuildContext context, int index) {
-    var prePaymentVisibility = context.read<PrePaymentVisibility>();
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -219,71 +218,11 @@ class HomeTabs {
           const SizedBox(
             height: 10,
           ),
-          GestureDetector(
-            onTap: (){
-              prePaymentVisibility.toggleVisibility();
-            },
-            child: BlocBuilder<PrePaymentVisibility, bool>(
-              builder: (context, isVisible) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      isVisible ? Icons.arrow_drop_up : Icons.add,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      isVisible ? 'pre-payment' : 'add pre-payment',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                );
-              },
+          const Text(
+            'Pre-payment is not supported by this tab',
+            style: TextStyle(
+              color: Colors.black38,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          BlocBuilder<PrePaymentVisibility, bool>(
-            builder: (emit, isVisible) {
-              return Visibility(
-                visible: isVisible,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: textField('Pre-payment(optional)', prePaymentController),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.purple[50],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        value: selectedPrePaymentFrequency,
-                        hint: const Text("Frequency"),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text("None")),
-                          DropdownMenuItem(value: "one_time", child: Text("One-time")),
-                          DropdownMenuItem(value: "monthly", child: Text("Monthly")),
-                          DropdownMenuItem(value: "yearly", child: Text("Yearly")),
-                        ],
-                        onChanged: (value) {
-                          selectedPrePaymentFrequency = value;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
           ),
           const SizedBox(
             height: 10,
@@ -342,8 +281,6 @@ class HomeTabs {
   }
 
   Widget interestTab(BuildContext context, int index) {
-    var prePaymentVisibility = context.read<PrePaymentVisibility>();
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -376,71 +313,11 @@ class HomeTabs {
           const SizedBox(
             height: 10,
           ),
-          GestureDetector(
-            onTap: (){
-              prePaymentVisibility.toggleVisibility();
-            },
-            child: BlocBuilder<PrePaymentVisibility, bool>(
-              builder: (context, isVisible) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      isVisible ? Icons.arrow_drop_up : Icons.add,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      isVisible ? 'pre-payment' : 'add pre-payment',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                );
-              },
+          const Text(
+            'Pre-payment is not supported by this tab',
+            style: TextStyle(
+              color: Colors.black38,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          BlocBuilder<PrePaymentVisibility, bool>(
-            builder: (emit, isVisible) {
-              return Visibility(
-                visible: isVisible,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: textField('Pre-payment(optional)', prePaymentController),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.purple[50],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        value: selectedPrePaymentFrequency,
-                        hint: const Text("Frequency"),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text("None")),
-                          DropdownMenuItem(value: "one_time", child: Text("One-time")),
-                          DropdownMenuItem(value: "monthly", child: Text("Monthly")),
-                          DropdownMenuItem(value: "yearly", child: Text("Yearly")),
-                        ],
-                        onChanged: (value) {
-                          selectedPrePaymentFrequency = value;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
           ),
           const SizedBox(
             height: 10,
@@ -530,7 +407,7 @@ class HomeTabs {
             height: 10,
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               prePaymentVisibility.toggleVisibility();
             },
             child: BlocBuilder<PrePaymentVisibility, bool>(
@@ -630,6 +507,7 @@ class HomeTabs {
                         BlocProvider.value(value: context.read<InterestBloc>()),
                         BlocProvider.value(value: context.read<PeriodBloc>()),
                         BlocProvider.value(value: context.read<ListVisibilityCubit>()),
+                        BlocProvider.value(value: context.read<PrePaymentVisibility>()),
                       ],
                       child: DetailedCalculation(tab: index),
                     ),

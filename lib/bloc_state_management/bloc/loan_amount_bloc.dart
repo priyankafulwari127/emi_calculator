@@ -9,6 +9,9 @@ import '../state/loan_amount_state.dart';
 class LoanAmountBloc extends Bloc<LoanAmountEvent, LoanAmountState> {
   LoanAmountBloc() : super(LoanAmountInitial()) {
     on<CalculateLoanAmount>((event, emit) {
+      var emiInDouble = double.tryParse(event.emi) ?? 0.0;
+      var interestInDouble = double.tryParse(event.interest) ?? 0.0;
+
       final amount = _calculateLoanAmount(
         event.emi,
         event.interest,
@@ -18,29 +21,29 @@ class LoanAmountBloc extends Bloc<LoanAmountEvent, LoanAmountState> {
 
       final totalMonths = _getTotalMonths(event.tenureInYears, event.tenureInMonths);
 
-      final amortization = _calculateAmortizationWithPrepayments(
+      final amortization = _buildAmortization(
         principal: amount,
-        annualRate: double.tryParse(event.interest) ?? 0.0,
+        annualRate: interestInDouble,
         totalMonths: totalMonths,
-        emi: double.tryParse(event.emi) ?? 0.0,
-        prepayAmountStr: event.prePaymentAmount,
-        prepayFreq: event.prePaymentFrequency,
+        emi: emiInDouble,
       );
 
       double totalInterest = 0;
-      double totalPrincipal = 0;
-      for (var row in amortization) {
-        totalInterest += row.interest;
-        totalPrincipal += row.principleAmount;
-      }
-      final totalPaid = totalPrincipal + totalInterest;
+      double totalPaid = 0;
 
-      emit(CalculatedLoanAmount(
-        amount: amount,
-        totalInterest: totalInterest,
-        totalAmountPaid: totalPaid,
-        amortizationTable: amortization,
-      ));
+      for (final row in amortization) {
+        totalInterest += row.interest;
+        totalPaid += row.emi;
+      }
+
+      emit(
+        CalculatedLoanAmount(
+          amount: amount,
+          totalInterest: totalInterest,
+          totalAmountPaid: totalPaid,
+          amortizationTable: amortization,
+        ),
+      );
     });
   }
 
@@ -72,63 +75,36 @@ class LoanAmountBloc extends Bloc<LoanAmountEvent, LoanAmountState> {
     return (years * 12 + months).round();
   }
 
-  List<AmortizationTableModel> _calculateAmortizationWithPrepayments({
+  List<AmortizationTableModel> _buildAmortization({
     required double principal,
     required double annualRate,
     required int totalMonths,
     required double emi,
-    String? prepayAmountStr,
-    String? prepayFreq,
   }) {
-    List<AmortizationTableModel> table = [];
-    double balance = principal;
+    final table = <AmortizationTableModel>[];
     final monthlyRate = annualRate / 12 / 100;
 
-    double? prepayAmount = prepayAmountStr != null && prepayAmountStr
-        .trim()
-        .isNotEmpty
-        ? double.tryParse(prepayAmountStr.trim())
-        : null;
+    double balance = principal;
 
-    bool hasPrepay = prepayAmount != null && prepayAmount > 0 && prepayFreq != null;
+    for (int month = 1; month <= totalMonths && balance > 0; month++) {
+      final interest = balance * monthlyRate;
+      double principalPaid = emi - interest;
 
-    for (int month = 1; month <= totalMonths; month++) {
-      double extraPrincipal = 0;
-
-      if (hasPrepay) {
-        if (prepayFreq == "monthly") {
-          extraPrincipal = prepayAmount!;
-        } else if (prepayFreq == "yearly" && month % 12 == 1) {
-          extraPrincipal = prepayAmount!;
-        } else if (prepayFreq == "one_time" && month == 1) {
-          extraPrincipal = prepayAmount!;
-        }
+      if (principalPaid > balance) {
+        principalPaid = balance;
       }
 
-      balance -= extraPrincipal;
-      if (balance < 0) balance = 0;
+      balance -= principalPaid;
 
-      double interestThisMonth = balance * monthlyRate;
-
-      double principalThisMonth = emi - interestThisMonth;
-      if (principalThisMonth > balance) {
-        principalThisMonth = balance;
-      }
-
-      balance -= principalThisMonth;
-      if (balance < 0) balance = 0;
-
-      double totalPrincipalThisMonth = principalThisMonth + extraPrincipal;
-
-      table.add(AmortizationTableModel(
-        emi: emi,
-        principleAmount: totalPrincipalThisMonth,
-        interest: interestThisMonth,
-        period: month.toDouble(),
-        balance: balance,
-      ));
-
-      if (balance <= 0.01) break;
+      table.add(
+        AmortizationTableModel(
+          period: month.toDouble(),
+          emi: interest + principalPaid,
+          interest: interest,
+          principleAmount: principalPaid,
+          balance: balance,
+        ),
+      );
     }
 
     return table;
