@@ -1,3 +1,6 @@
+import 'package:emi_calculator/core/theme/theme.dart';
+import 'package:emi_calculator/core/theme/theme_bloc.dart';
+import 'package:emi_calculator/core/theme/util.dart';
 import 'package:emi_calculator/data/repository/auth_repository.dart';
 import 'package:emi_calculator/domain/wrapper/auth_wrapper.dart';
 import 'package:emi_calculator/firebase_options.dart';
@@ -7,6 +10,7 @@ import 'package:emi_calculator/presentation/bloc/home_bloc/emi/emi_bloc.dart';
 import 'package:emi_calculator/presentation/bloc/home_bloc/interest/interest_bloc.dart';
 import 'package:emi_calculator/presentation/bloc/home_bloc/loan_amount/loan_amount_bloc.dart';
 import 'package:emi_calculator/presentation/bloc/home_bloc/period/period_bloc.dart';
+import 'package:emi_calculator/presentation/screens/auth/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +26,14 @@ import 'core/shared_cubit/pre_payment_visibility.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (_) => AppThemeCubit(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -46,9 +53,34 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ListVisibilityCubit()),
         BlocProvider(create: (_) => PrePaymentVisibility()),
       ],
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: AuthWrapper(),
+      child: BlocBuilder<AppThemeCubit, AppThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: state.themeMode,
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+            ),
+            builder: (context, child) {
+              final textTheme = createTextTheme(
+                context,
+                'Roboto',
+                'Lato',
+              );
+              final materialTheme = MaterialTheme(textTheme);
+              final brightness = MediaQuery.platformBrightnessOf(context);
+
+              return Theme(
+                data: brightness == Brightness.dark ? materialTheme.dark() : materialTheme.light(),
+                child: child!,
+              );
+            },
+            home: LoginScreen(),
+          );
+        },
       ),
     );
   }

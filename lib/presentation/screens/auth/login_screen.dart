@@ -22,7 +22,9 @@ class LoginScreen extends StatelessWidget {
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message ?? "Error")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message ?? "Error")),
+        );
       },
       codeSent: (id, _) {
         _verificationId = id;
@@ -52,39 +54,57 @@ class LoginScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
-          title: const Text(
-            'Login',
-            style: TextStyle(
-              color: Colors.white,
+            //   title: Text(
+            //     'Login',
+            //     style: Theme.of(context).textTheme.displaySmall,
+            //     selectionColor: Theme.of(context).colorScheme.onPrimary,
+            //   ),
+            //   // backgroundColor: Theme.of(context).colorScheme.primary,
+            //   centerTitle: true,
             ),
-          ),
-          backgroundColor: Colors.purple[400],
-          centerTitle: true,
-        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(12),
+              Text(
+                'What is your phone number?',
+                style: Theme.of(context).textTheme.displaySmall,
+                textAlign: TextAlign.start,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.sizeOf(context).width,
+                child: TextField(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                    hintText: 'Enter phone-number',
+                    hintStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  filled: true,
-                  fillColor: Colors.purple[50],
-                  hintText: 'Enter phone-number',
+                  keyboardType: TextInputType.text,
+                  controller: phoneNumberController,
                 ),
-                keyboardType: TextInputType.text,
-                controller: phoneNumberController,
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
-              textField('Enter one-time passcode', smsCodeController),
+              textField(
+                context,
+                'Enter one-time passcode',
+                smsCodeController,
+              ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
                 if (state is AuthLoading) {
@@ -92,19 +112,19 @@ class LoginScreen extends StatelessWidget {
                 }
                 return ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple[400],
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    elevation: 2,
                   ),
                   onPressed: () {
                     otpSent ? verifyOtp(context) : sendOtp(context);
                   },
                   child: Text(
                     otpSent ? "Verify OTP" : "Send OTP",
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    selectionColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                 );
               })

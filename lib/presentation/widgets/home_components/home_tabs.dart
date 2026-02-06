@@ -31,11 +31,11 @@ class HomeTabs {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          textField('Loan Amount', loanAmountController),
+          textField(context, 'Loan Amount', loanAmountController),
           const SizedBox(
             height: 10,
           ),
-          textField('Annual Interest', interestController),
+          textField(context, 'Annual Interest', interestController),
           const SizedBox(
             height: 10,
           ),
@@ -43,13 +43,13 @@ class HomeTabs {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: textField('Years', yearsDurationController),
+                child: textField(context, 'Years', yearsDurationController),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                child: textField('Months', monthDurationController),
+                child: textField(context, 'Months', monthDurationController),
               )
             ],
           ),
@@ -91,7 +91,7 @@ class HomeTabs {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Expanded(
-                      child: textField('Pre-payment(optional)', prePaymentController),
+                      child: textField(context, 'Pre-payment(optional)', prePaymentController),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -193,11 +193,11 @@ class HomeTabs {
           const SizedBox(
             height: 20,
           ),
-          textField('EMI', emiController),
+          textField(context, 'EMI', emiController),
           const SizedBox(
             height: 10,
           ),
-          textField('Annual Interest', interestController),
+          textField(context, 'Annual Interest', interestController),
           const SizedBox(
             height: 10,
           ),
@@ -205,13 +205,13 @@ class HomeTabs {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: textField('Years', yearsDurationController),
+                child: textField(context, 'Years', yearsDurationController),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                child: textField('Months', monthDurationController),
+                child: textField(context, 'Months', monthDurationController),
               ),
             ],
           ),
@@ -288,11 +288,11 @@ class HomeTabs {
           const SizedBox(
             height: 20,
           ),
-          textField('Loan Amount', loanAmountController),
+          textField(context, 'Loan Amount', loanAmountController),
           const SizedBox(
             height: 10,
           ),
-          textField('EMI', emiController),
+          textField(context, 'EMI', emiController),
           const SizedBox(
             height: 10,
           ),
@@ -300,13 +300,13 @@ class HomeTabs {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: textField('Years', yearsDurationController),
+                child: textField(context, 'Years', yearsDurationController),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                child: textField('Months', monthDurationController),
+                child: textField(context, 'Months', monthDurationController),
               ),
             ],
           ),
@@ -385,7 +385,7 @@ class HomeTabs {
           const SizedBox(
             height: 20,
           ),
-          textField('Loan Amount', loanAmountController),
+          textField(context, 'Loan Amount', loanAmountController),
           const SizedBox(
             height: 10,
           ),
@@ -393,13 +393,13 @@ class HomeTabs {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: textField('Annual Interest', interestController),
+                child: textField(context, 'Annual Interest', interestController),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                child: textField('EMI', emiController),
+                child: textField(context, 'EMI', emiController),
               ),
             ],
           ),
@@ -441,7 +441,7 @@ class HomeTabs {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Expanded(
-                      child: textField('Pre-payment(optional)', prePaymentController),
+                      child: textField(context, 'Pre-payment(optional)', prePaymentController),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
