@@ -15,18 +15,14 @@ class CoreTotalsCalculationRow<B extends BlocBase<S>, S> extends StatelessWidget
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const Spacer(),
           BlocBuilder<B, S>(
             builder: (context, state) {
               return Text(
                 valueProvider(state),
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium,
               );
             },
           ),

@@ -7,7 +7,6 @@ Widget amortizationTableListValues(String title){
       textAlign: TextAlign.center,
       style: const TextStyle(
         letterSpacing: 0,
-        fontWeight: FontWeight.bold,
         fontSize: 12,
       ),
     ),

@@ -41,8 +41,8 @@ class AmortizationTableList<B extends BlocBase<S>, S> extends StatelessWidget {
                             children: [
                               amortizationTableListValues('${state.amortizationTable[index].period.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].principleAmount.round()}'),
-                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].interest.round()}'),
+                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].balance.round()}'),
                             ],
                           ),
@@ -74,8 +74,8 @@ class AmortizationTableList<B extends BlocBase<S>, S> extends StatelessWidget {
                             children: [
                               amortizationTableListValues('${state.amortizationTable[index].period.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].principleAmount.round()}'),
-                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].interest.round()}'),
+                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].balance.round()}'),
                             ],
                           ),
@@ -107,8 +107,8 @@ class AmortizationTableList<B extends BlocBase<S>, S> extends StatelessWidget {
                             children: [
                               amortizationTableListValues('${state.amortizationTable[index].period.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].principleAmount.round()}'),
-                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].interest.round()}'),
+                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].balance.round()}'),
                             ],
                           ),
@@ -140,8 +140,8 @@ class AmortizationTableList<B extends BlocBase<S>, S> extends StatelessWidget {
                             children: [
                               amortizationTableListValues('${state.amortizationTable[index].period.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].principleAmount.round()}'),
-                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].interest.round()}'),
+                              amortizationTableListValues('${state.amortizationTable[index].emi.round()}'),
                               amortizationTableListValues('${state.amortizationTable[index].balance.round()}'),
                             ],
                           ),

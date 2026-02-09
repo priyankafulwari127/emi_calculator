@@ -25,31 +25,29 @@ class DetailedCalculation extends StatelessWidget {
     final listVisibility = context.read<ListVisibilityCubit>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Details',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.displaySmall,
+          selectionColor: Theme.of(context).colorScheme.onSurface,
         ),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        backgroundColor: Colors.purple[400],
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            calculationSwitch(),
+            calculationSwitch(context),
             const SizedBox(
               height: 15,
             ),
@@ -64,15 +62,13 @@ class DetailedCalculation extends StatelessWidget {
                     children: [
                       Text(
                         isVisible ? 'Hide Details' : 'View Details',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        selectionColor: Theme.of(context).colorScheme.onSurface,
                       ),
                       Icon(
                         isVisible ? Icons.arrow_drop_down_rounded : Icons.arrow_drop_up_rounded,
                         size: 22,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ],
                   );
@@ -88,6 +84,7 @@ class DetailedCalculation extends StatelessWidget {
                   return Visibility(
                     visible: isVisible,
                     child: Card(
+                      elevation: 2,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -97,8 +94,8 @@ class DetailedCalculation extends StatelessWidget {
                               children: [
                                 amortizationTableHeaderComponent('Months'),
                                 amortizationTableHeaderComponent('Principle Paid'),
-                                amortizationTableHeaderComponent('EMI'),
                                 amortizationTableHeaderComponent('Interest'),
+                                amortizationTableHeaderComponent('EMI'),
                                 amortizationTableHeaderComponent('Balance'),
                               ],
                             ),
@@ -122,7 +119,7 @@ class DetailedCalculation extends StatelessWidget {
     );
   }
 
-  Widget calculationSwitch() {
+  Widget calculationSwitch(BuildContext context) {
     switch (tab) {
       case 0:
         return SingleChildScrollView(
@@ -141,6 +138,7 @@ class DetailedCalculation extends StatelessWidget {
                 height: 20,
               ),
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -204,6 +202,7 @@ class DetailedCalculation extends StatelessWidget {
                 height: 20,
               ),
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -267,6 +266,7 @@ class DetailedCalculation extends StatelessWidget {
                 height: 20,
               ),
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -330,6 +330,7 @@ class DetailedCalculation extends StatelessWidget {
                 height: 20,
               ),
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -377,13 +378,10 @@ class DetailedCalculation extends StatelessWidget {
           ),
         );
       default:
-        return const Text(
+        return Text(
           'No Data Found',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge,
         );
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TabCalculationWidget<B extends BlocBase<S>, S> extends StatelessWidget {
@@ -13,10 +14,7 @@ class TabCalculationWidget<B extends BlocBase<S>, S> extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          style:  Theme.of(context).textTheme.bodyLarge,
         ),
         BlocBuilder<B, S>(
           builder: (context, state) {

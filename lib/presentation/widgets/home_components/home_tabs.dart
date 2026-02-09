@@ -67,13 +67,12 @@ class HomeTabs {
                   children: [
                     Icon(
                       isVisible ? Icons.arrow_drop_up : Icons.add,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     Text(
                       isVisible ? 'pre-payment' : 'add pre-payment',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      selectionColor: Theme.of(context).colorScheme.onSurface,
                     ),
                   ],
                 );
@@ -95,26 +94,30 @@ class HomeTabs {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.purple[50],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
+                      child: SizedBox(
+                        height: 50,
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            isDense: true,
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          value: selectedPrePaymentFrequency,
+                          hint: const Text("Frequency"),
+                          items: const [
+                            DropdownMenuItem(value: null, child: Text("None")),
+                            DropdownMenuItem(value: "one_time", child: Text("One-time")),
+                            DropdownMenuItem(value: "monthly", child: Text("Monthly")),
+                            DropdownMenuItem(value: "yearly", child: Text("Yearly")),
+                          ],
+                          onChanged: (value) {
+                            selectedPrePaymentFrequency = value;
+                          },
                         ),
-                        value: selectedPrePaymentFrequency,
-                        hint: const Text("Frequency"),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text("None")),
-                          DropdownMenuItem(value: "one_time", child: Text("One-time")),
-                          DropdownMenuItem(value: "monthly", child: Text("Monthly")),
-                          DropdownMenuItem(value: "yearly", child: Text("Yearly")),
-                        ],
-                        onChanged: (value) {
-                          selectedPrePaymentFrequency = value;
-                        },
                       ),
                     ),
                   ],
@@ -129,7 +132,7 @@ class HomeTabs {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[400],
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -171,11 +174,10 @@ class HomeTabs {
                   );
                 }
               },
-              child: const Text(
+              child: Text(
                 'Calculate',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -218,10 +220,10 @@ class HomeTabs {
           const SizedBox(
             height: 10,
           ),
-          const Text(
+          Text(
             'Pre-payment is not supported by this tab',
             style: TextStyle(
-              color: Colors.black38,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(
@@ -231,7 +233,7 @@ class HomeTabs {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[400],
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -266,10 +268,10 @@ class HomeTabs {
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Calculate',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 18,
                 ),
               ),
@@ -313,10 +315,10 @@ class HomeTabs {
           const SizedBox(
             height: 10,
           ),
-          const Text(
+          Text(
             'Pre-payment is not supported by this tab',
             style: TextStyle(
-              color: Colors.black38,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(
@@ -326,7 +328,7 @@ class HomeTabs {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[400],
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -361,10 +363,10 @@ class HomeTabs {
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Calculate',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 18,
                 ),
               ),
@@ -417,12 +419,12 @@ class HomeTabs {
                   children: [
                     Icon(
                       isVisible ? Icons.arrow_drop_up : Icons.add,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     Text(
                       isVisible ? 'pre-payment' : 'add pre-payment',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -445,26 +447,30 @@ class HomeTabs {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.purple[50],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
+                      child: SizedBox(
+                        height: 50,
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            isDense: true,
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          value: selectedPrePaymentFrequency,
+                          hint: const Text("Frequency"),
+                          items: const [
+                            DropdownMenuItem(value: null, child: Text("None")),
+                            DropdownMenuItem(value: "one_time", child: Text("One-time")),
+                            DropdownMenuItem(value: "monthly", child: Text("Monthly")),
+                            DropdownMenuItem(value: "yearly", child: Text("Yearly")),
+                          ],
+                          onChanged: (value) {
+                            selectedPrePaymentFrequency = value;
+                          },
                         ),
-                        value: selectedPrePaymentFrequency,
-                        hint: const Text("Frequency"),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text("None")),
-                          DropdownMenuItem(value: "one_time", child: Text("One-time")),
-                          DropdownMenuItem(value: "monthly", child: Text("Monthly")),
-                          DropdownMenuItem(value: "yearly", child: Text("Yearly")),
-                        ],
-                        onChanged: (value) {
-                          selectedPrePaymentFrequency = value;
-                        },
                       ),
                     ),
                   ],
@@ -479,7 +485,7 @@ class HomeTabs {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[400],
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -514,10 +520,10 @@ class HomeTabs {
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Calculate',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 18,
                 ),
               ),

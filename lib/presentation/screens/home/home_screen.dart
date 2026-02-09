@@ -19,15 +19,12 @@ class HomeScreen extends StatelessWidget {
       initialIndex: 0,
       length: 4,
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'EMI Calculator',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.displaySmall
           ),
-          centerTitle: true,
-          backgroundColor: Colors.purple[400],
           actions: [
             IconButton(
               onPressed: () {
@@ -38,16 +35,16 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.login,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             )
           ],
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            labelColor: Colors.white,
-            tabs: [
+          bottom: TabBar(
+            indicatorColor: Theme.of(context).colorScheme.onSurface,
+            labelColor: Theme.of(context).colorScheme.onSurface,
+            tabs: const [
               Tab(text: 'EMI'),
               Tab(text: 'Loan Amount'),
               Tab(text: 'Interest'),
